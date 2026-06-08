@@ -48,7 +48,7 @@ public class MegalithWorldgenRegistry {
     // ── Structure placement type ──────────────────────────────────────────────
 
     private static final DeferredRegister<StructurePlacementType<?>> PLACEMENT_TYPES =
-            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT_TYPE, Megalith.MOD_ID);
+            DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, Megalith.MOD_ID);
 
     /** megalith:megalith_placement */
     public static final DeferredHolder<StructurePlacementType<?>, StructurePlacementType<MegalithStructurePlacement>>

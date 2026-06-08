@@ -11,13 +11,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * Vanilla {@link StructurePiece} that acts as a lightweight marker committed
@@ -46,7 +46,7 @@ public class MegalithStructurePiece extends StructurePiece {
     // ── Constructor (worldgen path) ───────────────────────────────────────────
 
     public MegalithStructurePiece(MegaStructureDefinition def, BlockPos origin) {
-        super(getType(), 0, makeBoundingBox(origin, def.scanRadius()));
+        super(requireType(), 0, makeBoundingBox(origin, def.scanRadius()));
         this.megalithId = def.id();
         this.origin     = origin;
     }
@@ -54,7 +54,7 @@ public class MegalithStructurePiece extends StructurePiece {
     // ── Constructor (deserialisation path) ───────────────────────────────────
 
     public MegalithStructurePiece(StructurePieceSerializationContext ctx, CompoundTag tag) {
-        super(getType(), tag);
+        super(requireType(), tag);
         this.megalithId = ResourceLocation.parse(tag.getString("megalithId"));
         this.origin     = new BlockPos(tag.getInt("ox"), tag.getInt("oy"), tag.getInt("oz"));
     }
@@ -78,7 +78,7 @@ public class MegalithStructurePiece extends StructurePiece {
      */
     @Override
     public void postProcess(net.minecraft.world.level.WorldGenLevel level,
-                            net.minecraft.world.level.levelgen.structure.StructureManager structureManager,
+                            StructureManager structureManager,
                             net.minecraft.world.level.chunk.ChunkGenerator generator,
                             net.minecraft.util.RandomSource random,
                             BoundingBox box, ChunkPos chunkPos,
@@ -127,7 +127,7 @@ public class MegalithStructurePiece extends StructurePiece {
         );
     }
 
-    private static StructurePieceType getType() {
+    private static StructurePieceType requireType() {
         // TYPE is set by MegalithWorldgenRegistry after DeferredRegister fires
         if (TYPE == null) throw new IllegalStateException(
                 "[Megalith] MegalithStructurePiece.TYPE not yet registered.");

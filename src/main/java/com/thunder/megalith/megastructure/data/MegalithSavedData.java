@@ -1,7 +1,7 @@
 package com.thunder.megalith.megastructure.data;
 
-import com.thunder.megalith.Megalith;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -32,9 +32,8 @@ public class MegalithSavedData extends SavedData {
         // SavedData is attached to the overworld so it persists regardless of which
         // dimension triggers the call.
         ServerLevel overworld = level.getServer().overworld();
-        // TODO: verify SavedData.Factory API matches NeoForge 1.21.1 signature
         return overworld.getDataStorage().computeIfAbsent(
-                new SavedData.Factory<>(MegalithSavedData::new, MegalithSavedData::load, null),
+                new SavedData.Factory<>(MegalithSavedData::new, MegalithSavedData::load),
                 DATA_KEY
         );
     }
@@ -73,7 +72,7 @@ public class MegalithSavedData extends SavedData {
 
     // ── NBT serialization ────────────────────────────────────────────────────
 
-    public static MegalithSavedData load(CompoundTag tag) {
+    public static MegalithSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
         MegalithSavedData data = new MegalithSavedData();
         ListTag list = tag.getList("entries", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
@@ -89,7 +88,7 @@ public class MegalithSavedData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag list = new ListTag();
         for (GeneratedStructureInfo info : generated.values()) {
             CompoundTag entry = new CompoundTag();
