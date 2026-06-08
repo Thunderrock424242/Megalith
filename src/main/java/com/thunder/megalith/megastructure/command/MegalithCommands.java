@@ -3,6 +3,7 @@ package com.thunder.megalith.megastructure.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.thunder.megalith.megastructure.api.MegalithStructures;
 import com.thunder.megalith.megastructure.data.GeneratedStructureInfo;
 import com.thunder.megalith.megastructure.data.MegaStructureDefinition;
 import com.thunder.megalith.megastructure.datapack.MegalithStructureLoader;
