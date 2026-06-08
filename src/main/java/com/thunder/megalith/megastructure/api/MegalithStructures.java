@@ -14,7 +14,7 @@ import java.util.Optional;
 
 /**
  * Primary public API for the Megalith library.
- *
+ * <p>
  * Other mods should interact with Megalith exclusively through this class.
  *
  * <pre>{@code
